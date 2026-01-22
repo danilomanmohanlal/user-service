@@ -29,8 +29,10 @@ jobs:
     
     - name: Update GitOps repo with new image
       run: |
-        git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/${{ secrets.GITOPS_REPO }}.git
+        git clone https://github.com/${{ secrets.GITOPS_REPO }}.git
         cd gitops-microservices
+
+        git remote set-url origin https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/${{ secrets.GITOPS_REPO }}.git
 
         sed -i "s|image: .*user-service:.*|image: danilomanmohanlal/user-service:${{ github.sha }}|" apps/user-service/deployment.yaml
 
@@ -39,4 +41,4 @@ jobs:
 
         git add .
         git commit -m "Update user-service image to ${{ github.sha }}"
-        git push
+        git push origin master
