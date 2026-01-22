@@ -29,7 +29,7 @@ jobs:
     
     - name: Update GitOps repo with new image
       run: |
-        git clone https://${{ secrets.GITOPS_TOKEN }}@github.com/${{ secrets.GITOPS_REPO }}.git
+        git clone https://x-access-token:${{ secrets.GITOPS_TOKEN }}@github.com/${{ secrets.GITOPS_REPO }}.git
         cd gitops-microservices
 
         sed -i "s|image: .*user-service:.*|image: danilomanmohanlal/user-service:${{ github.sha }}|" apps/user-service/deployment.yaml
